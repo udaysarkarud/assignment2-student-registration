@@ -5,10 +5,14 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const userId = +params.id;
-  const res = await prisma.user.delete({
-    where: {
-      id: userId,
-    },
-  });
-  return NextResponse.json(res);
+  try {
+    const res = await prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+    return NextResponse.json(res);
+  } catch (error) {
+    return NextResponse.json("Something went wrong");
+  }
 }
